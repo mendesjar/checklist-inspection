@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { Checkbox } from './components/ui/checkbox';
+import { Label } from './components/ui/label';
+import { CheckedState } from '@radix-ui/react-checkbox';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [checklist, setChecklist] = useState({
+    newVehicle: false,
+    oldVehicle: false,
+  });
+
+  function onChangeCheckBox(name: string, checked: CheckedState) {
+    setChecklist({
+      ...checklist,
+      [name]: checked,
+    });
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="relative z-20 h-dvh w-full bg-blue-500">
+        <div className="flex h-full w-screen justify-center bg-red-500 p-5">
+          <div className="aspect-3/4 rounded-xl bg-purple-200">
+            <div className="flex items-center justify-between bg-amber-100 px-6 py-5">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/2560px-Disney%2B_logo.svg.png"
+                alt="logomarca"
+                className="h-14"
+              />
+              <Label className="text-2xl font-bold uppercase">
+                CheckList de Inspeção
+              </Label>
+            </div>
+            <div className="flex items-center justify-center bg-amber-400 py-4">
+              <Label>Teste de escrita</Label>
+            </div>
+            <div className="flex items-center justify-center gap-x-10 bg-amber-800 py-5">
+              <div className="flex items-center space-x-3">
+                <Checkbox
+                  id="newVehicle"
+                  name="newVehicle"
+                  onCheckedChange={(checked) =>
+                    onChangeCheckBox('newVehicle', checked)
+                  }
+                  checked={checklist.newVehicle}
+                />
+                <label
+                  htmlFor="newVehicle"
+                  className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Veículo Novo
+                </label>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Checkbox
+                  id="oldVehicle"
+                  name="oldVehicle"
+                  onCheckedChange={(checked) =>
+                    onChangeCheckBox('oldVehicle', checked)
+                  }
+                  checked={checklist.oldVehicle}
+                />
+                <label
+                  htmlFor="oldVehicle"
+                  className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Veículo Usado
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
