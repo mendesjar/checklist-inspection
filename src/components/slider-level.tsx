@@ -20,7 +20,7 @@ export function SliderLevel({ fuelLevel, setFuelLevel }: SliderLevelInterface) {
       <div className="relative h-24 w-48 overflow-hidden">
         <div className="absolute inset-0 flex items-end justify-center">
           <div
-            className={`h-24 w-1 origin-bottom bg-black transition-transform duration-300`}
+            className={`z-10 h-24 w-1 origin-bottom bg-black transition-transform duration-300`}
             style={{ transform: `rotate(${angle}deg)` }}
           />
         </div>
