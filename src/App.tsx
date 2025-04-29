@@ -25,9 +25,9 @@ function App() {
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/2560px-Disney%2B_logo.svg.png"
                 alt="logomarca"
-                className="h-14"
+                className="h-10"
               />
-              <Label className="text-2xl font-bold uppercase">
+              <Label className="text-xl font-bold uppercase">
                 CheckList de Inspeção
               </Label>
             </div>
