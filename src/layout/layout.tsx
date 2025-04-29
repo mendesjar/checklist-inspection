@@ -10,15 +10,45 @@ import {
 } from '@/components/ui/popover';
 import { CalendarIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { SliderLevel } from '@/components/slider-level';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+const baseUrl = 'https://parallelum.com.br/fipe/api/v1/carros/marcas';
 
 export default function ChecklistInspecao() {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [fuelLevel, setFuelLevel] = useState(100);
+  const [modelos, setModelos] = useState([]);
+  const [marcas, setMarcas] = useState([]);
+
+  async function buscarMarcas() {
+    const apiData = await fetch(`${baseUrl}`);
+    const apiResult = await apiData.json();
+    setMarcas(apiResult);
+  }
+
+  async function buscarModelos(codigo: string) {
+    if (!codigo) setModelos([]);
+    const apiData = await fetch(`${baseUrl}/${codigo}/modelos`);
+    const apiResult = await apiData.json();
+    setModelos(apiResult.modelos);
+  }
+
+  useEffect(() => {
+    buscarMarcas();
+  }, []);
 
   return (
     <div className="mx-auto max-w-7xl space-y-6 p-4 md:p-8">
@@ -97,9 +127,63 @@ export default function ChecklistInspecao() {
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <Input placeholder="Modelo" />
-            <Input placeholder="UF / Cidade" />
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid w-full max-w-sm items-center gap-0.5">
+              <Label htmlFor="marca">Marca</Label>
+              <Select onValueChange={async (e) => await buscarModelos(e)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione a Marca" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Marca</SelectLabel>
+                    {marcas?.length
+                      ? marcas.map(
+                          (marca: { codigo: string; nome: string }) => (
+                            <SelectItem
+                              key={marca.codigo}
+                              value={marca.codigo}
+                              className="uppercase"
+                            >
+                              {marca.nome}
+                            </SelectItem>
+                          ),
+                        )
+                      : null}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-0.5">
+              <Label htmlFor="modelo">Modelo</Label>
+              <Select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione o Modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Modelo</SelectLabel>
+                    {modelos?.length
+                      ? modelos.map(
+                          (modelo: { codigo: string; nome: string }) => (
+                            <SelectItem
+                              key={modelo.codigo}
+                              value={modelo.nome}
+                              className="uppercase"
+                            >
+                              {modelo.nome}
+                            </SelectItem>
+                          ),
+                        )
+                      : null}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid w-full max-w-sm items-center gap-0.5">
+              <Label htmlFor="uf">UF / Cidade</Label>
+              <Input id="uf" name="uf" />
+            </div>
           </div>
 
           <div className="grid items-center gap-4 md:grid-cols-3">
