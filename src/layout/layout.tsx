@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { SliderLevel } from '@/components/slider-level';
 
 export default function ChecklistInspecao() {
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [fuelLevel, setFuelLevel] = useState(100);
 
   return (
@@ -51,11 +51,16 @@ export default function ChecklistInspecao() {
           <div className="grid gap-4 md:grid-cols-4">
             <div className="grid w-full max-w-sm items-center gap-0.5">
               <Label htmlFor="placa">Placa</Label>
-              <Input id="placa" name="placa" />
+              <Input
+                id="placa"
+                name="placa"
+                className="uppercase"
+                maxLength={7}
+              />
             </div>
             <div className="grid w-full max-w-sm items-center gap-0.5">
               <Label htmlFor="km">KM</Label>
-              <Input id="km" name="km" />
+              <Input id="km" name="km" type="number" />
             </div>
             <div className="grid w-full max-w-sm items-center gap-0.5">
               <Label htmlFor="data">Data</Label>
@@ -97,7 +102,7 @@ export default function ChecklistInspecao() {
             <Input placeholder="UF / Cidade" />
           </div>
 
-          <div className="grid gap-4 md:grid-cols-3 items-center">
+          <div className="grid items-center gap-4 md:grid-cols-3">
             <SliderLevel fuelLevel={fuelLevel} setFuelLevel={setFuelLevel} />
 
             <div className="flex flex-col gap-y-4">
