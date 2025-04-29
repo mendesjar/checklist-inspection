@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Checkbox } from './components/ui/checkbox';
 import { Label } from './components/ui/label';
 import { CheckedState } from '@radix-ui/react-checkbox';
+import ChecklistInspecao from './layout/layout';
 
 function App() {
   const [checklist, setChecklist] = useState({
@@ -18,7 +19,8 @@ function App() {
 
   return (
     <>
-      <div className="relative z-20 h-dvh w-full bg-blue-500">
+      <ChecklistInspecao />
+      {/* <div className="relative z-20 h-dvh w-full bg-blue-500">
         <div className="flex h-full w-screen justify-center bg-red-500 p-5">
           <div className="aspect-3/4 rounded-xl bg-purple-200">
             <div className="flex items-center justify-between bg-amber-100 px-6 py-5">
@@ -68,9 +70,12 @@ function App() {
                 </label>
               </div>
             </div>
+            <div>
+
+            </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
