@@ -302,16 +302,16 @@ function App() {
               </div>
               <hr />
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-                {checklistItems.map((categoria, index) => (
+                {checklistItems.map((checklistItem, index) => (
                   <div key={index}>
                     <h4 className="mb-3 font-semibold">
-                      {categoria.categoria}
+                      {checklistItem.categoria}
                     </h4>
                     <div className="space-y-2">
-                      {categoria.itens.map((item, i) => (
+                      {checklistItem.itens.map((item, i) => (
                         <div key={i} className="flex items-center space-x-2">
-                          <Checkbox id={`${categoria.categoria}-${i}`} />
-                          <Label htmlFor={`${categoria.categoria}-${i}`}>
+                          <Checkbox id={`${checklistItem.categoria}-${i}`} />
+                          <Label htmlFor={`${checklistItem.categoria}-${i}`}>
                             {item}
                           </Label>
                         </div>
