@@ -8,9 +8,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { Calendar } from '@/components/ui/calendar';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -25,23 +25,36 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-const baseUrl = 'https://parallelum.com.br/fipe/api/v1/carros/marcas';
+const baseUrl = 'https://parallelum.com.br/fipe/api/v1';
 
-export default function ChecklistInspecao() {
+interface IChecklistLayout {
+  checklist: {
+    newVehicle: false;
+    oldVehicle: false;
+  };
+  setChecklist: Dispatch<
+    SetStateAction<{
+      newVehicle: false;
+      oldVehicle: false;
+    }>
+  >;
+}
+
+export function ChecklistLayout(props: IChecklistLayout) {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [fuelLevel, setFuelLevel] = useState(100);
   const [modelos, setModelos] = useState([]);
   const [marcas, setMarcas] = useState([]);
 
   async function buscarMarcas() {
-    const apiData = await fetch(`${baseUrl}`);
+    const apiData = await fetch(`${baseUrl}/carros/marcas`);
     const apiResult = await apiData.json();
     setMarcas(apiResult);
   }
 
   async function buscarModelos(codigo: string) {
     if (!codigo) setModelos([]);
-    const apiData = await fetch(`${baseUrl}/${codigo}/modelos`);
+    const apiData = await fetch(`${baseUrl}/carros/marcas/${codigo}/modelos`);
     const apiResult = await apiData.json();
     setModelos(apiResult.modelos);
   }
@@ -245,7 +258,12 @@ export default function ChecklistInspecao() {
             </div>
           </div>
 
-          <Button className="mt-6">Salvar Checklist</Button>
+          <Button className="mt-6 cursor-pointer">
+            <span>
+              <FileText />
+            </span>
+            Salvar Checklist
+          </Button>
         </CardContent>
       </Card>
     </div>
