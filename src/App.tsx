@@ -25,6 +25,7 @@ import {
 import { SliderLevel } from './components/slider-level';
 import { Textarea } from './components/ui/textarea';
 import { SideLabelButton } from './components/side-label-button';
+import { Checkbox } from './components/ui/checkbox';
 
 const baseUrl = 'https://parallelum.com.br/fipe/api/v1';
 
@@ -40,6 +41,66 @@ function App() {
   const [fuelLevel, setFuelLevel] = useState(100);
   const [modelos, setModelos] = useState([]);
   const [marcas, setMarcas] = useState([]);
+
+  const checklistItems = [
+    {
+      categoria: 'Luzes Traseiras',
+      itens: [
+        'Luz da placa',
+        'Luz de ré direita',
+        'Luz de freio direita',
+        'Seta direita',
+        'Luz de ré esquerda',
+        'Luz de freio esquerda',
+        'Seta esquerda',
+      ],
+    },
+    {
+      categoria: 'Luzes Dianteiras',
+      itens: [
+        'Luz da placa',
+        'Farol alto direito',
+        'Farol baixo direito',
+        'Seta direita',
+        'Neblina direita',
+        'Farol alto esquerdo',
+        'Farol baixo esquerdo',
+        'Seta esquerda',
+        'Neblina esquerda',
+      ],
+    },
+    {
+      categoria: 'Segurança',
+      itens: [
+        'Alarme',
+        'Buzina',
+        'Chave de Roda',
+        'Cintos',
+        'Documentos',
+        'Extintor',
+        'Limpadores',
+        'Macaco',
+        'Painel',
+        'Retrovisor Interno',
+        'Retrovisor Direito',
+        'Retrovisor Esquerdo',
+      ],
+    },
+    {
+      categoria: 'Motor',
+      itens: [
+        'Acelerador',
+        'Água do Limpador',
+        'Água do Radiador',
+        'Embreagem',
+        'Freio',
+        'Freio de mão',
+        'Óleo do freio',
+        'Óleo do motor',
+        'Tanque de Partida',
+      ],
+    },
+  ];
 
   async function buscarMarcas() {
     const apiData = await fetch(`${baseUrl}/carros/marcas`);
@@ -111,7 +172,7 @@ function App() {
                 </div>
                 <div className="grid w-full items-center gap-0.5">
                   <Label htmlFor="km">KM</Label>
-                  <Input id="km" name="km" type="number" />
+                  <Input id="km" name="km" type="number" min={0} />
                 </div>
                 <div className="grid w-full items-center gap-0.5">
                   <Label htmlFor="data">Data</Label>
@@ -210,43 +271,54 @@ function App() {
                   fuelLevel={fuelLevel}
                   setFuelLevel={setFuelLevel}
                 />
-
-                <div className="flex flex-col gap-y-4">
-                  <div>
-                    <Label>
-                      Documento original (CRLV) <br /> se encontra no Veículo
-                    </Label>
-                    <RadioGroup defaultValue="comCRLV" className="mt-3">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="comCRLV" id="comCRLV" />
-                        <Label htmlFor="comCRLV">Sim</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="semCRLV" id="semCRLV" />
-                        <Label htmlFor="semCRLV">Não</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
-                  <div>
-                    <Label>
-                      Veículo devolvido
-                      <br /> excessivamente sujo?
-                    </Label>
-                    <RadioGroup defaultValue="veiculoSujo" className="mt-3">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="veiculoSujo" id="veiculoSujo" />
-                        <Label htmlFor="veiculoSujo">Sim</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem
-                          value="veiculoLimpo"
-                          id="veiculoLimpo"
-                        />
-                        <Label htmlFor="veiculoLimpo">Não</Label>
-                      </div>
-                    </RadioGroup>
-                  </div>
+                <div>
+                  <Label>
+                    Documento original (CRLV) se encontra no Veículo
+                  </Label>
+                  <RadioGroup defaultValue="comCRLV" className="mt-3">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="comCRLV" id="comCRLV" />
+                      <Label htmlFor="comCRLV">Sim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="semCRLV" id="semCRLV" />
+                      <Label htmlFor="semCRLV">Não</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
+                <div>
+                  <Label>Veículo devolvido excessivamente sujo?</Label>
+                  <RadioGroup defaultValue="veiculoSujo" className="mt-3">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="veiculoSujo" id="veiculoSujo" />
+                      <Label htmlFor="veiculoSujo">Sim</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="veiculoLimpo" id="veiculoLimpo" />
+                      <Label htmlFor="veiculoLimpo">Não</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </div>
+              <hr />
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                {checklistItems.map((categoria, index) => (
+                  <div key={index}>
+                    <h4 className="mb-3 font-semibold">
+                      {categoria.categoria}
+                    </h4>
+                    <div className="space-y-2">
+                      {categoria.itens.map((item, i) => (
+                        <div key={i} className="flex items-center space-x-2">
+                          <Checkbox id={`${categoria.categoria}-${i}`} />
+                          <Label htmlFor={`${categoria.categoria}-${i}`}>
+                            {item}
+                          </Label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
               <div>
                 <Label>Observações</Label>
