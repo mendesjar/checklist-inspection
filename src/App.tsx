@@ -65,7 +65,14 @@ function App() {
         <div className="h-full w-full p-5">
           <Card className="w-full">
             <CardHeader>
-              <CardTitle className="flex">Check List de Inspeção</CardTitle>
+              <CardTitle className="flex w-full items-center justify-between">
+                <p>Check List de Inspeção</p>
+                <img
+                  src="https://www.adsoft.com.br/mensagemsiaf/img/logo-adsoft.png"
+                  alt=""
+                  className="hidden h-8 md:block"
+                />
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 md:grid-cols-4">
