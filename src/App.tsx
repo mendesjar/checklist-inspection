@@ -29,13 +29,13 @@ import { SideLabelButton } from './components/side-label-button';
 const baseUrl = 'https://parallelum.com.br/fipe/api/v1';
 
 function App() {
-  const [checklist, setChecklist] = useState<{
+  /* const [checklist, setChecklist] = useState<{
     newVehicle: false;
     oldVehicle: false;
   }>({
     newVehicle: false,
     oldVehicle: false,
-  });
+  }); */
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [fuelLevel, setFuelLevel] = useState(100);
   const [modelos, setModelos] = useState([]);
