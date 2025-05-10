@@ -121,10 +121,10 @@ function App() {
 
   return (
     <>
-      <SideLabelButton />
       <div className="w-full max-w-screen">
         <div className="h-full w-full p-5">
-          <Card className="w-full">
+          <SideLabelButton className="peer" />
+          <Card className="w-full transition-all peer-hover:w-[97%]">
             <CardHeader>
               <CardTitle className="flex w-full items-center justify-between">
                 <p>Check List de Inspeção</p>
