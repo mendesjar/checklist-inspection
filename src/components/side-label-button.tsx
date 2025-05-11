@@ -13,7 +13,7 @@ export function SideLabelButton({ className }: React.ComponentProps<'div'>) {
       <Button className="cursor-pointer rounded-none rounded-t-xl px-4 py-2 text-white transition-all hover:px-4.5">
         Preview PDF
         <span>
-          <FileText />
+          <FileText className="stroke-3" />
         </span>
       </Button>
     </div>
